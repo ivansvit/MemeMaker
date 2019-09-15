@@ -12,6 +12,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var topCaptionSegmentedControl: UISegmentedControl!
     @IBOutlet weak var bottomCaptionSegmentedControl: UISegmentedControl!
+    @IBOutlet weak var mainImageView: UIImageView!
     @IBOutlet weak var topCaptionLabel: UILabel!
     @IBOutlet weak var bottomCaptionLabel: UILabel!
     
@@ -23,20 +24,30 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view.
         configureTopSegmentedControl()
         configureBottomSegmentedControl()
+        selectInitValues()
     }
 
     
-    @IBAction func captionSegmentedControl(_ sender: UISegmentedControl) {
-        let currentChoice = topChoices[sender.selectedSegmentIndex ]
+    @IBAction func topCaptionSegmentedControl(_ sender: UISegmentedControl) {
+        let currentChoice = topChoices[sender.selectedSegmentIndex]
         topCaptionLabel.text = currentChoice.text
+        print(currentChoice)
+        mainImageView.image = UIImage(named: currentChoice.image)
+    }
+    
+    @IBAction func bottomCaptionSegmentedControl(_ sender: UISegmentedControl) {
+        let currentChoice = bottomChoices[sender.selectedSegmentIndex]
+        bottomCaptionLabel.text = currentChoice.text
+        print(currentChoice)
+        mainImageView.image = UIImage(named: currentChoice.image)
     }
     
     func configureTopSegmentedControl() {
         topCaptionSegmentedControl.removeAllSegments()
         
-        let optionOne = CaptionOption(emoji: "🕶", text: "You know what's cool?")
-        let optionTwo = CaptionOption(emoji: "💥", text: "You know what makes me mad?")
-        let optionThree = CaptionOption(emoji: "💕", text: "You know what I love?")
+        let optionOne = CaptionOption(emoji: "🕶", text: "You know what's cool?", image: "memeAppWonka")
+        let optionTwo = CaptionOption(emoji: "💥", text: "You know what makes me mad?", image: "memeAppFrog")
+        let optionThree = CaptionOption(emoji: "💕", text: "You know what I love?", image: "memeAppYao")
         
         topChoices = [optionOne, optionTwo, optionThree]
         
@@ -48,15 +59,22 @@ class ViewController: UIViewController {
     func configureBottomSegmentedControl() {
         bottomCaptionSegmentedControl.removeAllSegments()
         
-        let optionFour = CaptionOption(emoji: "🐱", text: "Cats wearing hats")
-        let optionFive = CaptionOption(emoji: "🐕", text: "Dogs carrying log")
-        let optionSix = CaptionOption(emoji: "🐒", text: "Monkeys being funky")
+        let optionFour = CaptionOption(emoji: "🐱", text: "Cats wearing hats", image: "memeAppCat")
+        let optionFive = CaptionOption(emoji: "🐕", text: "Dogs carrying log", image: "memeAppDog")
+        let optionSix = CaptionOption(emoji: "🐒", text: "Monkeys being funky", image: "memeAppMonkey")
         
         bottomChoices = [optionFour, optionFive, optionSix]
         
         for choice in bottomChoices {
             bottomCaptionSegmentedControl.insertSegment(withTitle: choice.emoji, at: bottomChoices.count, animated: false)
         }
+    }
+    
+    func selectInitValues() {
+        topCaptionSegmentedControl.selectedSegmentIndex = 0
+        bottomCaptionSegmentedControl.selectedSegmentIndex = 0
+        topCaptionLabel.text = topChoices.first?.text
+        bottomCaptionLabel.text = bottomChoices.first?.text
     }
     
 }
